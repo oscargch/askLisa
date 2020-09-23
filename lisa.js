@@ -31,10 +31,12 @@ clearInterval(interval);
 }, speed);
 }
 
-//this is an option, but maybe they should be mapped. each character is bound to the other, that way if they are deleted they both get deleted.
-const permitedKeys = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '.', ',', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ', '?'];
+//la respuesta debe ser escrita entre dos characteres identificables.
 
-let hiddenAnswer = '';
+//this is an option, but maybe they should be mapped. each character is bound to the other, that way if they are deleted they both get deleted.
+const permitedKeys = ['[', ']', 'Enter', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '.', ',', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ', '?'];
+
+var regex = /(?<=\[)(.*?)(?=\])/;
 let whatsWritten = '';
 let whatsWrittenCount = 0;
 
@@ -51,29 +53,28 @@ whatsWrittenCount ++;
 whatsWritten = whatsWritten.slice(0, -1);
 whatsWrittenCount --;
 // replaceFirst42(textArea, e.key, 25);
-}
+} 
 if (whatsWrittenCount < 0){
   whatsWrittenCount = 0;
   }
 if (whatsWrittenCount < 43){
   e.preventDefault();
   }
+if (e.key == 'Enter') {
+  getAnswer(whatsWritten);
+  }
 console.log(`${whatsWrittenCount} ${whatsWritten}`);
 moveCursorToEnd(textArea);
 } 
-
-// 
 
 letterCount = 0;
 // var caretPosition = document.caretPositionFromPoint(float x, float y);
 function replaceFirst42(destination, message) {
   if (whatsWrittenCount < 44) {
-
     destination.innerHTML += message.charAt(letterCount);
     letterCount++;
     console.log(`This is i: ${letterCount}`);
-    // console.log(caretPosition);
-}
+  }
 }
 
 // printLetterByLetter(textArea, welcome, 25);
@@ -90,3 +91,20 @@ function moveCursorToEnd(el) {
   }
 }
 
+function getAnswer(whatsWritten) {
+  let newtextArea = document.querySelector('.answer');
+  console.log('running getAnswer');
+  let hiddenAnswer = regex.exec(whatsWritten);
+  console.log(`secret answer: ${hiddenAnswer[0]}`);
+  console.log(`secret answer: ${typeof(hiddenAnswer[0])}`);
+  console.log(`new text area: ${textArea}`);
+  revealSecret();
+          function revealSecret() {
+            printAnswerByLetter(newtextArea, hiddenAnswer[0]);
+          }
+}
+
+function printAnswerByLetter(destination, secretAnswer) {
+  console.log('running printAnswerByLetter');
+  destination.insertAdjacentHTML('beforeend', secretAnswer);
+  }
