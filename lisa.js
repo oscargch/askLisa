@@ -11,7 +11,7 @@ document.body.appendChild(textHTML);
 
 let textArea = document.querySelector(".textinput");
 let askString = `Lisa, could you please answer my question? `; // 42 characters
-let welcome = `I'm Lisa. Ask nicely or face the consequences. `;
+let welcome = `I'm Lisa. Ask nicely every time or face the consequences. `;
 
 // logic:
 function writeFirst() {
@@ -23,7 +23,7 @@ writeFirst();
 function printLetterByLetter(destination, message, speed) {
   var i = 0;
   var interval = setInterval(function() {
-    destination.innerHTML += message.charAt(i);
+    destination.value += message.charAt(i);
     i++;
     if (i > message.length) {
       clearInterval(interval);
@@ -38,6 +38,12 @@ function printLetterByLetter(destination, message, speed) {
 let regex = /(?<=\[)(.*?)(?=\])/;
 let whatsWritten = "";
 let whatsWrittenCount = 0;
+
+function resetVariables() {
+  whatsWritten = "";
+  whatsWrittenCount = 0;
+  letterCount = 0;
+}
 
 document.body.addEventListener("keydown", pressedKey);
 
@@ -62,7 +68,7 @@ function pressedKey(e) {
   if (e.key == "Enter") {
     getAnswer(whatsWritten);
   }
-  console.log(`${whatsWrittenCount} ${whatsWritten}`);
+  // console.log(`${whatsWrittenCount} ${whatsWritten}`);
   moveCursorToEnd(textArea);
 }
 
@@ -70,9 +76,9 @@ letterCount = 0;
 // var caretPosition = document.caretPositionFromPoint(float x, float y);
 function replaceFirst42(destination, message) {
   if (whatsWrittenCount < 44) {
-    destination.innerHTML += message.charAt(letterCount);
+    destination.value += message.charAt(letterCount);
     letterCount++;
-    console.log(`This is i: ${letterCount}`);
+    // console.log(`This is i: ${letterCount}`);
   }
 }
 
@@ -91,7 +97,7 @@ function moveCursorToEnd(el) {
 }
 
 function getAnswer(whatsWritten) {
-  let newtextArea = textArea; //change it to ".answer" when done
+  let newtextArea = textArea; 
   // console.log("running getAnswer");
   // console.log(newtextArea);
   // console.log(newtextArea.value);
@@ -109,14 +115,11 @@ function getAnswer(whatsWritten) {
 
 function printAnswerByLetter(destination, hiddenAnswer) {
   let priorvalue = destination.value;
-  console.log("running printAnswerByLetter");
-  console.log(destination);
+  // console.log("running printAnswerByLetter");
+  // console.log(destination);
   destination.value = `${priorvalue} ${hiddenAnswer[0]}`;
-  // whatsWritten = "";
-  // whatsWrittenCount = 0;
-  // letterCount = 0;
+  resetVariables()
 }
-
 // En la segunda vuelta esta intentando usar printLetterByLetter() pero eso no va a functionar de nuevo.
 // La funcion printLetterByLetter() deberria funcionar de una manera distinta... de adherir algo al valor en la ultima parte.
 
