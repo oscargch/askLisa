@@ -5,6 +5,7 @@ let bodyDiv = document.querySelector(".boody");
 let textHTML = document.createRange().createContextualFragment(coreHTML);
 // console.log(coreHTML);
 
+
 document.body.appendChild(textHTML);
 
 // After initial HTML dump variables:
@@ -21,6 +22,8 @@ function writeFirst() {
 writeFirst();
 
 function printLetterByLetter(destination, message, speed) {
+  
+  console.log("Here ", message, speed, destination.innerHTML)
   var i = 0;
   var interval = setInterval(function() {
     destination.innerHTML += message.charAt(i);
@@ -35,13 +38,15 @@ function printLetterByLetter(destination, message, speed) {
 
 //this is an option, but maybe they should be mapped. each character is bound to the other, that way if they are deleted they both get deleted.
 
-let regex = /(?<=\[)(.*?)(?=\])/;
+let regex = /(?<=\[)(.*?)(?=\])/; 
 let whatsWritten = "";
 let whatsWrittenCount = 0;
 
 document.body.addEventListener("keydown", pressedKey);
 
+var continueRunning = false
 function pressedKey(e) {
+  console.log("E Key ", e.key)
   if (e.key == "Shift") {
     whatsWrittenCount = whatsWrittenCount;
   } else if (permitedKeys.includes(e.key)) {
@@ -56,8 +61,10 @@ function pressedKey(e) {
   if (whatsWrittenCount < 0) {
     whatsWrittenCount = 0;
   }
-  if (whatsWrittenCount < 43) {
-    e.preventDefault();
+  if (whatsWrittenCount < 43) { // this changed.
+    console.log("What 's W ", whatsWrittenCount)
+    e.bubbles = false;
+    // e.preventDefault(); // <-- this is preventing the document.body from it's default behaviour
   }
   if (e.key == "Enter") {
     getAnswer(whatsWritten);
@@ -69,11 +76,32 @@ function pressedKey(e) {
 letterCount = 0;
 // var caretPosition = document.caretPositionFromPoint(float x, float y);
 function replaceFirst42(destination, message) {
+  console.log("Here?? ", whatsWrittenCount, message, destination.innerHTML)
   if (whatsWrittenCount < 44) {
     destination.innerHTML += message.charAt(letterCount);
     letterCount++;
     console.log(`This is i: ${letterCount}`);
   }
+}
+
+function resetGame() {
+
+  // initial HTML
+//coreHTML = `<textarea class="textinput" name="thingy" wrap="on" rows="100" cols="50"></textarea>`;
+//bodyDiv = document.querySelector(".boody");
+//textHTML = document.createRange().createContextualFragment(coreHTML);
+// console.log(coreHTML);
+// document.body.appendChild(textHTML);
+//textArea = document.querySelector(".textinput");
+askString = `Lisa, could you please answer my question? `; // 42 characters
+welcome = `I'm Lisa. Ask nicely or face the consequences. `;
+textArea.value = ""
+whatsWritten = "";
+whatsWrittenCount = 0;
+letterCount = 0;
+textArea.innerHTML = ""
+e.bubbles = true;
+writeFirst()
 }
 
 // printLetterByLetter(textArea, welcome, 25);
@@ -91,7 +119,7 @@ function moveCursorToEnd(el) {
 }
 
 function getAnswer(whatsWritten) {
-  let newtextArea = textArea; //change it to ".answer" when done
+  //let newtextArea = textArea; //change it to ".answer" when done
   // console.log("running getAnswer");
   // console.log(newtextArea);
   // console.log(newtextArea.value);
@@ -101,7 +129,7 @@ function getAnswer(whatsWritten) {
   // console.log(`secret answer: ${answerInHTML}`);
   // console.log(`secret answer: ${typeof answerInHTML}`);
   // console.log(`new text area: ${newtextArea}`);
-  revealSecret(newtextArea, hiddenAnswer);
+  revealSecret(textArea, hiddenAnswer);
   function revealSecret(newtextArea, hiddenAnswer) {
     printAnswerByLetter(newtextArea, hiddenAnswer);
   }
@@ -112,9 +140,10 @@ function printAnswerByLetter(destination, hiddenAnswer) {
   console.log("running printAnswerByLetter");
   console.log(destination);
   destination.value = `${priorvalue} ${hiddenAnswer[0]}`;
-  // whatsWritten = "";
-  // whatsWrittenCount = 0;
-  // letterCount = 0;
+  continueRunning = true
+
+  setTimeout(resetGame, 5000)
+  //resetGame()
 }
 
 // En la segunda vuelta esta intentando usar printLetterByLetter() pero eso no va a functionar de nuevo.
