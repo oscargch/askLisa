@@ -1,4 +1,4 @@
-const permitedKeys = [
+const permittedKeys = [
   "[",
   "]",
   "Enter",

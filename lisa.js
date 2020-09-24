@@ -50,7 +50,7 @@ document.body.addEventListener("keydown", pressedKey);
 function pressedKey(e) {
   if (e.key == "Shift") {
     whatsWrittenCount = whatsWrittenCount;
-  } else if (permitedKeys.includes(e.key)) {
+  } else if (permittedKeys.includes(e.key)) {
     whatsWritten = whatsWritten.concat(e.key);
     whatsWrittenCount++;
     replaceFirst42(textArea, askString, 25);
@@ -120,3 +120,7 @@ function printAnswerByLetter(destination, hiddenAnswer) {
 }
 // En la segunda vuelta esta intentando usar printLetterByLetter() pero eso no va a functionar de nuevo.
 // La funcion printLetterByLetter() deberria funcionar de una manera distinta... de adherir algo al valor en la ultima parte.
+
+
+// try again.
+// as a valid question.
