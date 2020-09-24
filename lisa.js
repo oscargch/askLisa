@@ -82,9 +82,8 @@ function replaceFirst42(destination, message) {
   }
 }
 
-// printLetterByLetter(textArea, welcome, 25);
-
 //move cursor to end (el) is a reference to an input or textarea
+//https://css-tricks.com/snippets/javascript/move-cursor-to-end-of-input/
 function moveCursorToEnd(el) {
   if (typeof el.selectionStart == "number") {
     el.selectionStart = el.selectionEnd = el.value.length;
@@ -102,7 +101,6 @@ function getAnswer(whatsWritten) {
   // console.log(newtextArea);
   // console.log(newtextArea.value);
   let hiddenAnswer = regex.exec(whatsWritten);
-  // let answerInHTML = document.createRange().createContextualFragment(hiddenAnswer);
   // console.log(`Answer in HTML: ${answerInHTML}`);
   // console.log(`secret answer: ${answerInHTML}`);
   // console.log(`secret answer: ${typeof answerInHTML}`);
@@ -122,9 +120,3 @@ function printAnswerByLetter(destination, hiddenAnswer) {
 }
 // En la segunda vuelta esta intentando usar printLetterByLetter() pero eso no va a functionar de nuevo.
 // La funcion printLetterByLetter() deberria funcionar de una manera distinta... de adherir algo al valor en la ultima parte.
-
-// textContent =
-// innerText =
-// innerHTML =; // replace HTML
-// insertAdjacentHTML("beforeend", secretAnswer); // insert at some point
-// appendChild(answerInHTML); // added to (used before with contextualfragment)
