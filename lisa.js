@@ -121,7 +121,7 @@ function resetVariables() {
   letterCount = 0;
 }
 
-document.body.addEventListener("keydown", pressedKey);
+textArea.addEventListener("keydown", pressedKey), {capture: true};
 
 function pressedKey(e) {
   if (e.key == "Shift") {

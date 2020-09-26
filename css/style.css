@@ -35,3 +35,23 @@ body {
   font-family: captain howdy;
   padding: 50px;
 }
+
+.instructions {
+  color: rgb(29, 29, 29);
+  float: right;
+  position: absolute;
+  bottom: 0;
+  right: 100px;
+}
+
+.hint {
+  color: white;
+  float: right;
+  position: absolute;
+  bottom: 0;
+  right: 100px;
+}
+
+.instext {
+  color: white;
+}
